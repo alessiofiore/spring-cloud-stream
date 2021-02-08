@@ -1,0 +1,13 @@
+spring:
+  application:
+    name: spring-cloud-stream
+  cloud:
+    stream:
+      function:
+        definition: supplier
+#      kafka:
+#        binder:
+#          brokers: localhost:9092
+      bindings:
+        supplier-out-0:
+          destination: stream
