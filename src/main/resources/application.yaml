@@ -4,10 +4,15 @@ spring:
   cloud:
     stream:
       function:
-        definition: supplier
-#      kafka:
-#        binder:
-#          brokers: localhost:9092
+        definition: consumer
+      kafka:
+        binder:
+          brokers: localhost:9092,localhost:9093
       bindings:
         supplier-out-0:
-          destination: stream
+          destination: multi-partitions
+        consumer-in-0:
+          destination: multi-partitions
+          group: group1
+          consumer:
+            concurrency: 2

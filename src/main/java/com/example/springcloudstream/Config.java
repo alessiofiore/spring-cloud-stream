@@ -6,6 +6,7 @@ import org.springframework.messaging.Message;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Sinks;
 
+import java.util.function.Consumer;
 import java.util.function.Supplier;
 
 @Configuration
@@ -14,6 +15,13 @@ public class Config {
     @Bean
     public Supplier<Flux<Message<?>>> supplier() {
         return () -> fluxSinks().asFlux();
+    }
+
+    @Bean
+    public Consumer<Message<String>> consumer() {
+        return payload -> {
+            System.out.println(payload.getPayload() + " - " + payload.toString());
+        };
     }
 
     @Bean
