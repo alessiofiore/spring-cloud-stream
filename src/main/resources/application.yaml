@@ -2,9 +2,9 @@ spring:
   application:
     name: spring-cloud-stream
   cloud:
+    function:
+      definition: consumer
     stream:
-      function:
-        definition: consumer
       kafka:
         binder:
           brokers: localhost:9092,localhost:9093
