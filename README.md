@@ -7,9 +7,9 @@ spring:
   application:
     name: spring-cloud-stream
   cloud:
+    function:
+      definition: supplier;consumer
     stream:
-      function:
-        definition: supplier;consumer
       bindings:
         supplier-out-0:
           destination: some-topic
@@ -29,9 +29,10 @@ spring:
   application:
     name: spring-cloud-stream
   cloud:
+    function:
+      definition: supplier;consumer
     stream:
       function:
-        definition: supplier;consumer
         bindings:
             supplier-out-0: out-alias
             consumer-in-0: in-alias
@@ -54,9 +55,9 @@ spring:
   application:
     name: spring-cloud-stream
   cloud:
+    function:
+      definition: supplier;consumer
     stream:
-      function:
-        definition: supplier;consumer
       bindings:
         supplier-out-0:
           destination: some-topic
@@ -81,9 +82,10 @@ spring:
   application:
     name: spring-cloud-stream
   cloud:
+    function:
+      definition: supplier;consumer
     stream:
       function:
-        definition: supplier;consumer
         bindings:
             supplier-out-0: out-alias1
             supplier-out-1: out-alias2
