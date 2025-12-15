@@ -110,3 +110,128 @@ spring:
         kafka2:
           brokers: host2:9092
 ```
+
+
+
+```
+server:
+  port: 8080
+
+spring:
+  application: 
+    name: messaging-service
+
+  cloud:
+    stream:
+      # Configurazione dei Kafka Binders multipli
+      binders:
+        kafka-binder-1:
+          type:  kafka
+          environment:
+            spring: 
+              cloud:
+                stream:
+                  kafka:
+                    binder:
+                      brokers:  localhost:9092
+                      auto-create-topics: true
+                      configuration:
+                        key. serializer: org.apache.kafka.common.serialization.StringSerializer
+                        value.serializer: org.apache.kafka.common. serialization.StringSerializer
+        
+        kafka-binder-2:
+          type: kafka
+          environment:
+            spring:
+              cloud:
+                stream:
+                  kafka:
+                    binder:
+                      brokers: localhost:9093
+                      auto-create-topics: true
+                      configuration: 
+                        key.serializer: org.apache.kafka.common.serialization.StringSerializer
+                        value.serializer: org.apache. kafka.common.serialization.StringSerializer
+        
+        kafka-binder-3:
+          type:  kafka
+          environment:
+            spring:
+              cloud:
+                stream:
+                  kafka:
+                    binder:
+                      brokers: localhost:9094
+                      auto-create-topics: true
+                      configuration:
+                        key.serializer: org.apache.kafka.common.serialization. StringSerializer
+                        value.serializer: org.apache.kafka. common.serialization.StringSerializer
+
+      # Configurazione dei Bindings
+      bindings:
+        # Binding 1 - usa kafka-binder-1
+        orders-out-0:
+          destination: orders. topic
+          binder: kafka-binder-1
+          content-type: application/json
+          producer:
+            partition-count: 3
+        
+        # Binding 2 - usa kafka-binder-1
+        notifications-out-0:
+          destination: notifications.topic
+          binder: kafka-binder-1
+          content-type: application/json
+        
+        # Binding 3 - usa kafka-binder-2
+        payments-out-0:
+          destination: payments.topic
+          binder: kafka-binder-2
+          content-type: application/json
+          producer:
+            partition-count:  5
+        
+        # Binding 4 - usa kafka-binder-2
+        inventory-out-0:
+          destination: inventory.topic
+          binder: kafka-binder-2
+          content-type: application/json
+        
+        # Binding 5 - usa kafka-binder-3
+        analytics-out-0:
+          destination: analytics.topic
+          binder: kafka-binder-3
+          content-type: application/json
+        
+        # Binding 6 - usa kafka-binder-3
+        audit-out-0:
+          destination: audit.topic
+          binder: kafka-binder-3
+          content-type: application/json
+
+# Configurazione custom per gli alias dei binding
+messaging:
+  bindings:
+    aliases:
+      orders:  orders-out-0
+      notifications:  notifications-out-0
+      payments: payments-out-0
+      inventory: inventory-out-0
+      analytics: analytics-out-0
+      audit: audit-out-0
+
+# Actuator endpoints
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info,bindings,metrics
+  endpoint: 
+    health:
+      show-details: always
+
+logging:
+  level:
+    org.springframework.cloud.stream: DEBUG
+    org.apache.kafka: INFO
+```
