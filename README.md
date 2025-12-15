@@ -113,7 +113,7 @@ spring:
 
 
 
-```
+```yaml
 server:
   port: 8080
 
